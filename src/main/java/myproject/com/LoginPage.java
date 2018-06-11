@@ -23,7 +23,6 @@ public class LoginPage extends AbstractPage{
     }
 
     public boolean isWrongLogin(){
-        System.out.println(driver.findElement(wrongLoginElement).getText());
         if(driver.findElement(wrongLoginElement).getText() != wrongLoginText) {return true;}
         else {return false;}
     }

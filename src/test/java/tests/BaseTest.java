@@ -3,6 +3,7 @@ package tests;
 import myproject.com.utils.logging.EventHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -12,23 +13,22 @@ import org.testng.annotations.Parameters;
 
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by mike on 30.08.2017.
- */
+
 public abstract class BaseTest {
     protected EventFiringWebDriver driver;
-//    protected GeneralActions actions;
 
-    /**
-     *
-     * @param browser Driver type to use in tests.
-     *
-     * @return New instance of {@link WebDriver} object.
-     */
-    private WebDriver getDriver(String browser) {
+
+    private WebDriver getDriver(String browser, ChromeOptions chromeOptions) {
         switch (browser) {
+            case "chrome_mobile":
+                System.setProperty(
+                        "webdriver.chrome.driver",
+                        getResource("/chromedriver.exe"));
+                return new ChromeDriver(chromeOptions);
             case "firefox":
                 System.setProperty(
                         "webdriver.gecko.driver",
@@ -49,10 +49,6 @@ public abstract class BaseTest {
         }
     }
 
-    /**
-     * @param resourceName The name of the resource
-     * @return Path to resource
-     */
     private String getResource(String resourceName) {
         try {
             return Paths.get(BaseTest.class.getResource(resourceName).toURI()).toFile().getPath();
@@ -62,30 +58,26 @@ public abstract class BaseTest {
         return resourceName;
     }
 
-    /**
-     * Prepares {@link WebDriver} instance with timeout and browser window configurations.
-     *
-     * Driver type is based on passed parameters to the automation project,
-     * creates {@link ChromeDriver} instance by default.
-     *
-     */
+
     @BeforeClass
     @Parameters("browser")
-    // TODO use parameters from pom.xml to pass required browser type
     public void setUp(String browser ) {
-        driver = new EventFiringWebDriver(getDriver(browser));
+        ChromeOptions chromeOptions = new ChromeOptions();
+        if(browser.equals("chrome_mobile")) {
+            Map<String, String> mobileEmulation = new HashMap<>();
+            mobileEmulation.put("deviceName", "Nexus 5");
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        }
+        driver = new EventFiringWebDriver(getDriver(browser, chromeOptions));
         driver.register(new EventHandler());
-
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
-//        Actions actions = new GeneralActions(driver);
+
+
     }
 
-    /**
-     * Closes driver instance after test class execution.
-     */
     @AfterClass
     public void tearDown() {
         if (driver != null) {
