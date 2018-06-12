@@ -28,12 +28,12 @@ public class LoginPage extends AbstractPage{
     }
 
 
-    public MainPage login(String email, String password, Boolean remember) {
+    public MainPage login(String email, String password, String firstname, Boolean remember) {
         driver.findElement(emailField).sendKeys(email);
         driver.findElement(passwordField).sendKeys(password);
         if(remember == true) driver.findElement(rememberMe).click();
         driver.findElement(submitButton).click();
-        return new MainPage(driver);
+        return new MainPage(driver, firstname);
     }
 
     public void wrongLogin(String email, String password) {

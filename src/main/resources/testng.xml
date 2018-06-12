@@ -1,17 +1,19 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="sq" verbose="1" >
-
-    <test name="Login Chrome" >
+    
+    <test name="Regression Chrome" >
         <parameter name="browser" value="chrome"/>
         <classes>
             <class name="tests.LoginTest"/>
+            <class name="tests.RegistrationTest"/>
         </classes>
     </test>
 
-    <test name="Login FireFox" >
+    <test name="Regression Firefox" >
         <parameter name="browser" value="firefox"/>
         <classes>
+            <class name="tests.RegistrationTest"/>
             <class name="tests.LoginTest"/>
         </classes>
     </test>

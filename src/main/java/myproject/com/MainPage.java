@@ -10,10 +10,12 @@ public class MainPage extends AbstractPage{
     private By welcomeTitle = By.id("Secondary_Navbar-Account");
     private String welcomeText = "Hello, test!  ";
     private By logOutButton = By.className("primary-action");
+    private String firstname;
 
 
-    public MainPage(WebDriver driver) {
+    public MainPage(WebDriver driver, String firstname) {
         super(driver);
+        this.firstname = firstname;
         waitForPageLoad();
     }
 
@@ -29,9 +31,15 @@ public class MainPage extends AbstractPage{
         return welcomeText;
     }
 
-    private void waitForPageLoad() {
+    public boolean waitForPageLoad() {
         WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
-        webDriverWait.until(ExpectedConditions.textToBe(welcomeTitle, welcomeText));
+        try{
+            webDriverWait.until(ExpectedConditions.textToBe(welcomeTitle, "Hello, " + firstname + "!  "));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
     }
 
 }

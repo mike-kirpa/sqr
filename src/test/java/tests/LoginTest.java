@@ -17,8 +17,8 @@ public class LoginTest extends BaseTest {
     public void loginTest(){
         driver.navigate().to(Property.getData("base.url"));
         LoginPage loginPage = new LoginPage(driver);
-        MainPage mainPage = loginPage.login(Property.getData("user.email"), Property.getData("user.password"), false);
-        Assert.assertTrue(mainPage.getWelcomeTitleText().contains(mainPage.getSuccessLoginText()));
+        MainPage mainPage = loginPage.login(Property.getData("user.email"), Property.getData("user.password"), "test", false);
+        Assert.assertTrue(mainPage.waitForPageLoad());
         mainPage.logOut();
     }
 
