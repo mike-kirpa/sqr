@@ -49,7 +49,6 @@ public class RegistrationPage extends AbstractPage{
                                         , String secondpassword, Boolean subcsribe) throws InterruptedException {
         driver.findElement(firstNameField).sendKeys(firstname);
         driver.findElement(lastNameField).sendKeys(lastname);
-        //driver.findElement(emailField).sendKeys(java.util.UUID.randomUUID().toString() + "@gmail.com");
         driver.findElement(emailField).sendKeys(email);
         driver.findElement(phoneCodeList).click();
         driver.findElement(By.xpath("//*[contains(text(), '" + phonecode + "')]")).click();
