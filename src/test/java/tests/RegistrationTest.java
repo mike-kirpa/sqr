@@ -9,7 +9,11 @@ import org.testng.annotations.Test;
 
 public class RegistrationTest extends BaseTest{
 
-    //при большом количестве тестовых данных их нужно вынести в файл, создать класс для для хранения и доступа к этим данным, чтобы не было такой простыни с параметрами
+    /*
+    создание наборов тестовых данных
+    при большом количестве тестовых данных их нужно вынести в файл, создать класс для для хранения и доступа к этим данным,
+    передавать этот объект чтобы не было такой простыни с параметрами
+    */
     @DataProvider
     public Object[][] validDataRegistration(){
         String email = java.util.UUID.randomUUID().toString() + "@gmail.com";

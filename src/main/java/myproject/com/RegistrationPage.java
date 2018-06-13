@@ -66,6 +66,7 @@ public class RegistrationPage extends AbstractPage{
         driver.findElement(firstPasswordFiled).sendKeys(firstpassword);
         driver.findElement(secondPasswordField).sendKeys(secondpassword);
         if(!subcsribe) driver.findElement(mailSubscribeCheckbox).click();
+        //показываем окошко и ждем ввода 5 символов
         infoBox("Введите капчу", "Alert");
         while (driver.findElement(captchaFieild).getAttribute("value").length() != 5){
             Thread.sleep(5000);
